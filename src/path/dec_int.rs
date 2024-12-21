@@ -185,7 +185,7 @@ impl DecInt {
 
         DecInt {
             buf,
-            // SAFETY: cannot be less that 2 (initialized with 1 + at least one loop)
+            // SAFETY: cannot be less than 2 (initialized with 1 + at least one loop)
             len: unsafe { NonZeroU8::new_unchecked(len as u8) },
         }
     }
