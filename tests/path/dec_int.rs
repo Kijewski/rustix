@@ -3,7 +3,10 @@ use rustix::path::DecInt;
 macro_rules! check {
     ($i:expr) => {
         let i = $i;
-        assert_eq!(DecInt::new(i).as_ref().to_str().unwrap(), i.to_string());
+        assert_eq!(
+            DecInt::new(i).as_c_str().to_bytes_with_nul(),
+            format!("{i}\0").as_bytes(),
+        );
     };
 }
 
@@ -29,5 +32,12 @@ fn test_dec_int() {
     {
         check!(usize::MAX);
         check!(isize::MIN);
+    }
+
+    for i in u16::MIN..=u16::MAX {
+        check!(i);
+    }
+    for i in i16::MIN..=i16::MAX {
+        check!(i);
     }
 }
